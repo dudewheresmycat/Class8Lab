@@ -3,10 +3,33 @@ package cis232.lab;
 public class Student implements Comparable<Student>{
 	String name;
 	int points;
+	boolean here;
 	
-	public Student(String name, int points){
+	
+	public String getStringHere(){
+		if(here){
+			return "y";
+		}else{
+			return "n";
+		}
+	}
+	public boolean getHere(){
+		return here;
+	}
+	public void setHere(String here){
+		if(here.equalsIgnoreCase("N")){
+			this.here = false;
+		}else{
+			this.here = true;
+		}
+	}
+	public Student(){
+		
+	}
+	public Student(String name, int points, String here){
 		this.name = name;
 		this.points = points;
+		setHere(here);
 	}
 	
 	public void addPoint(){
@@ -18,7 +41,7 @@ public class Student implements Comparable<Student>{
 	}
 	
 	public String toCsvString(){
-		return String.format("%s,%d", name, points);
+		return String.format("%s,%d,%s", name, points, getStringHere() );
 	}
 	
 	public int getPoints(){

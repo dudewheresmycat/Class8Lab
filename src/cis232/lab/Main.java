@@ -57,16 +57,23 @@ public class Main {
 			unpickedStudents = pickedStudents;
 			pickedStudents = temp;
 		}
-		
 		Student student = unpickedStudents.remove(random.nextInt(unpickedStudents.size()));
 		pickedStudents.add(student);
 		return student;
 	}
 
 	private boolean askToPickStudent() {
+		if(unpickedStudents.isEmpty() && pickedStudents.isEmpty())
+		{
+			System.out.println("You have no students.");
+		}
+		else
+		{
 		System.out.println("Pick a student? (y/n)");
 		String pickInput = keyboard.nextLine();
 		return pickInput.equalsIgnoreCase("y");
+		}
+		return false;
 	}
 
 	private void loadStudentsFromFile() throws FileNotFoundException {
@@ -77,8 +84,17 @@ public class Main {
 		
 		while(input.hasNextLine()){
 			StringTokenizer tokens = new StringTokenizer(input.nextLine(), ",");
-			Student student = new Student(tokens.nextToken(), Integer.parseInt(tokens.nextToken()));
-			unpickedStudents.add(student);
+			Student student = new Student();
+			if(tokens.countTokens() ==3){
+				 student = new Student(tokens.nextToken(), Integer.parseInt(tokens.nextToken()),tokens.nextToken());
+			}else{
+				 student = new Student(tokens.nextToken(), Integer.parseInt(tokens.nextToken()),"");
+			}
+			
+			if(student.getHere()){
+				unpickedStudents.add(student);
+			}
+			
 			allStudents.add(student);
 		}
 		
